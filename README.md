@@ -5,6 +5,7 @@
 * Any image size can be uploaded which satisfy above constraint.
 * Image is automatically resize and prediction made in server.
 
+### FrontEnd Url : https://sushantproject-emlov2-project-frontend-streamlit-app-641zlw.streamlit.app/
 
 **GUI**
 ![](images/frontend_gui.png)
