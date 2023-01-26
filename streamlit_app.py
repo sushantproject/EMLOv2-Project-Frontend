@@ -18,15 +18,19 @@ def predict(encoded_string):
     data = {'body': encoded_string}
     headers = {'Content-Type': 'application/json'}
     response = requests.post(url, json=data, headers=headers).json()
-    # print(response)
+    print(response)
     # print(type(response))
     # print(response.keys())
     # print(response.values())
-    confidences = {}
-    confidences['Labels'] = list(response.keys())
-    confidences['Confidence (%)'] = list(response.values())
-    confidences['Confidence (%)'] = [i * 100 for i in confidences['Confidence (%)']]
-    return confidences
+    try:
+
+        confidences = {}
+        confidences['Labels'] = list(response.keys())
+        confidences['Confidence (%)'] = list(response.values())
+        confidences['Confidence (%)'] = [i * 100 for i in confidences['Confidence (%)']]
+        return confidences
+    except Exception as e:
+        return response
 
 
 def main():
@@ -55,7 +59,7 @@ def main():
 
             st.image(image, caption="Uploaded Image", use_column_width=False)
             st.write("")
-
+            predictions = None
             try:
                 with st.spinner("Predicting..."):
                     predictions = predict(encoded_string)
@@ -66,6 +70,9 @@ def main():
                     st.table(predictions)
             except:
                 st.error("Something went wrong. Please try again.")
+                st.error(f"Error: {predictions}")
+                st.error("Error can be due to: \n 1. Large file size [endpoint is small instance, sorry for now]"
+                         "\n 2. Maybe corrupted image. \n 3. Try again. Best of luck!")
         else:
             st.warning("Please upload an image.")
 
