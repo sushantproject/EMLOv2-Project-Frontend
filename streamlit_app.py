@@ -18,7 +18,7 @@ def predict(encoded_string):
     data = {'body': encoded_string}
     headers = {'Content-Type': 'application/json'}
     response = requests.post(url, json=data, headers=headers).json()
-    print(response)
+    # print(response)
     # print(type(response))
     # print(response.keys())
     # print(response.values())
@@ -51,6 +51,7 @@ def main():
     if st.button("Predict"):
         if uploaded_file is not None:
             image = Image.open(uploaded_file)
+            image = image.resize((300, 300)) # resize so that large files can easily pass to endpoint
             io_buffer = BytesIO()
             image.save(io_buffer, format="JPEG")
             encoded_string = base64.b64encode(io_buffer.getvalue()).decode("utf-8")
